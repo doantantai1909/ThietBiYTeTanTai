@@ -1,0 +1,51 @@
+﻿@model IEnumerable<DoAnTotNghiep.Models.LoaiSanPham>
+@{
+    ViewBag.Title = "AdminTKLoaiSP";
+    Layout = "~/Views/Layout/AdminLayout2.cshtml";
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 30);
+}
+
+
+    @grid.GetHtml(
+             tableStyle: "gridTable", // class css cho thẻ table
+             headerStyle: "gridHead", // class css cho các thẻ tiêu đề của table
+             footerStyle: "gridFooter", // class css cho phần phân trang phía dưới
+             rowStyle: "gridRow", // class css cho phần row lẽ
+             alternatingRowStyle: "gridAltRow", // class css cho các row chẳn
+             columns: grid.Columns(
+                 grid.Column("MaLoaiSP", "Mã Loại Sản Phẩm"),
+                 grid.Column("TenLoai", "Tên Loại Sản Phẩm"),
+                 grid.Column("Icon", "Icon")
+
+                 //grid.Column(format: p => Html.ActionLink("Chỉnh Sửa", "ChinhSua", new { id = p.MaSP })),
+                 //grid.Column(format: p => Html.ActionLink("Xoá", "Xoa", new { id = p.MaSP }))
+                 ))
+
+
+
+<style>
+    .gridTable {
+        border: 1px solid #808080;
+        width: 100%;
+    }
+
+    .gridHead {
+        border: 1px solid #808080;
+        background-color: lightblue;
+    }
+
+    .gridRow {
+        border: 1px solid #808080;
+    }
+
+    .gridAltRow {
+        border: 1px solid #808080;
+    }
+
+
+    .gridFooter {
+        font-weight: bold;
+        border: 1px solid #808080;
+    }
+</style>
+

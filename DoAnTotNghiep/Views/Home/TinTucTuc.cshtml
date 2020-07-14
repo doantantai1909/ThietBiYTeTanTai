@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DoAnTotNghiep.Models.TinTuc>
+<div class="special">
+    <div class="container">
+        <div class="specia-top">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4 col-sm-1 col-xs-6 col-min-12">
+                        <ul class="grid_2">
+                            <li>
+                                <div>
+                                    <a href="@Url.Action("ChiTietTinTuc", "Home", new {id = item.MaTinTuc })">
+                                        <img class="img-responsive" src="@Url.Content("~/Content/images/"+item.HinhAnh)" alt="@item.TieuDeTinTuc">
+                                    </a>
+                                </div>
+                                <div>
+                                    <h4>@item.TieuDeTinTuc</h4>
+                                    <br />
+                                    <span class="ps-people__position">@item.NgayDang</span>
+                                    <br />
+                                    <p>@item.NoiDungQuangCao</p>
+
+                                    <div class="row">
+                                        <ul>
+                                            <a href="https://www.facebook.com"><i class="fab fa-facebook"></i></a>&nbsp;
+                                            <a href="https://accounts.google.com/"><i class="fab fa-google"></i></a>&nbsp;
+                                            <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+                                        </ul>
+                                    </div>
+
+
+
+
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                }
+                <div class="clearfix"></div>
+
+            </div>
+        </div>
+    </div>
+</div>

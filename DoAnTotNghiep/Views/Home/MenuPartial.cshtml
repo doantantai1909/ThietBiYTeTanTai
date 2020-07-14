@@ -1,0 +1,23 @@
+﻿@using DoAnTotNghiep.Models;
+@model IEnumerable<LoaiSanPham>
+
+
+    <div class="  menu">
+        <ul>
+            <li class=" active"><a class="" href="@Url.Action("Index", "Home")"><span>Trang chủ</span></a></li>
+            <li class=""><a class="" href="@Url.Action("GioiThieu", "Home")"><span>Giới thiệu</span></a></li>
+            <li class=" "><a class="" href=""><span>Sản phẩm</span></a>
+                          <ul class="dl-submenu  ">
+                              @foreach (var item in Model)
+                              {
+                                 
+                                    <li><a href="@Url.Action("SanPhamTheoMaSP", "SanPham", new {@MaLoaiSP=item.MaLoaiSP })">» @item.TenLoai</a></li>
+                              }
+                          </ul>
+        </li>
+            <li class=""><a class="" href="@Url.Action("TinTuc", "Home")"><span>Tin tức</span></a></li>
+            <li class=""><a class="" href="@Url.Action("DichVu", "Home")"><span>Dịch vụ</span></a></li>
+            <li class=""><a class="" href="@Url.Action("TuyenDung", "Home")"><span>Tuyển dụng</span></a></li>
+            <li class=""><a class="" href="@Url.Action("LienHe", "Home")"><span>Liên hệ</span></a></li>
+        </ul>
+    </div>

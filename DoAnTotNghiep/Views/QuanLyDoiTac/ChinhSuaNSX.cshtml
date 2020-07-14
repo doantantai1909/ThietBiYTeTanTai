@@ -1,0 +1,55 @@
+﻿@model DoAnTotNghiep.Models.NhaSanXuat
+@{
+    ViewBag.Title = "ChinhSuaNSX";
+    Layout = "~/Views/Layout/AdminLayout2.cshtml";
+}
+
+<h2>Cập Nhật Nhà Sản Xuất</h2>
+
+@using (Html.BeginForm("ChinhSuaNSX", "QuanLyDoiTac", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.Hidden("MaNSX", Model.MaNSX);
+
+    <div class="form-group">
+        <label> Tên Nhà Sản Xuất</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TenNSX, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TenNSX, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label> Thông tin liên hệ</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ThongTin, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ThongTin, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <label> Logo Công ty</label>
+
+    <div class="form-group col-lg-2">
+
+        <input type="file" class="form-control form-control-user " id="Logo" name="Logo" placeholder="">
+        <img src="@Url.Content("~/Content/images/" + Model.Logo)" width="50px" height="50" />
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Cập Nhật" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Quay lại!", "QuanLyNSX")
+</div>

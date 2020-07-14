@@ -1,0 +1,76 @@
+﻿@model IEnumerable<DoAnTotNghiep.Models.NhaSanXuat>
+
+@{
+    ViewBag.Title = "AdminTKNSX";
+    Layout = "~/Views/Layout/AdminLayout2.cshtml";
+    // khởi tạo controll webgrid
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 10);
+}
+
+<div class="form-group row">
+
+    @Html.ActionLink("Thêm Loại Sản Phẩm", "ThemNSX", null, new { @class = "btn btn-success" })
+
+
+    @*form tìm kiếm ajax*@
+    @using (Ajax.BeginForm("AdminTKNSX", "QuanLyDoiTac", new AjaxOptions { UpdateTargetId = "KQTimKiemNSX", InsertionMode = InsertionMode.Replace }))
+    {
+        <div class="input-group" style="left:50px;">
+            <input type="text" id="txtTimKiem" value="" name="sTuKhoaNSX" placeholder="Nhập vào tên loại sản phẩm cần tìm...." />
+            <input type="submit" id="btnTimKiem" value="Tìm" />
+        </div>
+    }
+    <div style="clear:both"></div>
+</div>
+<br />
+
+
+@*Thể hiện dữ liệu thông qua controll webgrid*@
+
+<div id="KQTimKiemNSX" style="width: 100%; ">
+    @grid.GetHtml(
+             tableStyle: "gridTable", // class css cho thẻ table
+             headerStyle: "gridHead", // class css cho các thẻ tiêu đề của table
+             footerStyle: "gridFooter", // class css cho phần phân trang phía dưới
+             rowStyle: "gridRow", // class css cho phần row lẽ
+             alternatingRowStyle: "gridAltRow", // class css cho các row chẳn
+             columns: grid.Columns(
+                 grid.Column("MaNSX", "Mã Nhà Sản Xuất"),
+                 grid.Column("TenNSX", "Tên Nhà Sản Xuất"),
+                 grid.Column("ThongTin", "Thông Tin"),
+
+                 grid.Column("Logo", " Logo", format: p => @Html.Raw("<img width=\"100\" height=\"100\" src=\"../Content/images/" + p.Logo + "\">")),
+                 grid.Column(format: p => Html.ActionLink("Chỉnh Sửa", "ChinhSuaNSX", new { id = p.MaNSX })),
+                 grid.Column(format: p => Html.ActionLink("Xoá", "XoaNSX", new { id = p.MaNSX }))
+                 ))
+
+
+
+</div>
+
+
+<style>
+    .gridTable {
+        border: 1px solid #808080;
+        width: 100%;
+    }
+
+    .gridHead {
+        border: 1px solid #808080;
+        background-color: lightblue;
+    }
+
+    .gridRow {
+        border: 1px solid #808080;
+    }
+
+    .gridAltRow {
+        border: 1px solid #808080;
+    }
+
+
+    .gridFooter {
+        font-weight: bold;
+        border: 1px solid #808080;
+    }
+</style>

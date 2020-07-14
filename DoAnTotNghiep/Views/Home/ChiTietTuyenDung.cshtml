@@ -1,0 +1,22 @@
+﻿@using DoAnTotNghiep.Models
+@model TuyenDung
+@{
+    ViewBag.Title = "ChiTietTuyenDung";
+    Layout = "~/Views/Layout/SanPhamLayout.cshtml";
+}
+
+<div class="col-md-9 products-grid-right">
+    <h3> Thông Tin @Model.TieuDeTuyenDung </h3>
+    <div class="main_content_body main_content_body_cus1">
+        @Html.Raw(Model.NoiDungTuyenDung)
+        <script>
+                var div_fb_like = document.getElementById('fb-like');
+                if (div_fb_like) {
+                    div_fb_like.setAttribute('data-width', div_fb_like.parentNode.offsetWidth);
+                }
+        </script>
+        <div class="clear"></div>
+    </div>
+    <div class="clearfix"> </div>
+</div>
+

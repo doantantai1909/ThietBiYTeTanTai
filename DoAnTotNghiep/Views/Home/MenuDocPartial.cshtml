@@ -1,0 +1,11 @@
+﻿@using DoAnTotNghiep.Models;
+@model IEnumerable<LoaiSanPham>
+    <div class="dv_content_leftsp">
+        <h3>DANH MỤC SẢN PHẨM</h3>
+        <ul class="dv_list_dmsp">
+            @foreach (var item in Model)
+            {
+                <li><a href="@Url.Action("SanPhamTheoMaSP", "SanPham", new {@MaLoaiSP=item.MaLoaiSP })">@item.TenLoai</a></li>
+            }
+        </ul>
+    </div>

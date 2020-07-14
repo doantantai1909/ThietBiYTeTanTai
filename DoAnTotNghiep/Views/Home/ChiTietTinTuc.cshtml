@@ -1,0 +1,23 @@
+﻿@using DoAnTotNghiep.Models
+@model TinTuc
+@{
+    ViewBag.Title = "ChiTietTinTuc";
+    Layout = "~/Views/Layout/SanPhamLayout.cshtml";
+}
+
+<div class="col-md-9 products-grid-right">
+    <h3> @Model.TieuDeTinTuc </h3>
+    <div class="main_content_body main_content_body_cus1">
+        @Html.Raw(Model.NoiDungTinTuc)
+        <script>
+                var div_fb_like = document.getElementById('fb-like');
+                if (div_fb_like) {
+                    div_fb_like.setAttribute('data-width', div_fb_like.parentNode.offsetWidth);
+                }
+        </script>
+        <div class="clear"></div>
+    </div>
+    <div class="clearfix"> </div>
+</div>
+
+

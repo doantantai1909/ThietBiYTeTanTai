@@ -1,0 +1,44 @@
+﻿@using DoAnTotNghiep.Models;
+@model IEnumerable<SanPham>
+<div class="dv_content_leftsp">
+    <h3>SẢN PHẨM BÁN CHẠY</h3>
+    <div class="marqueew" style="height: 400px;">
+        <div class="js-marquee-wrapper" style="margin-top: 400px; animation: 113.657s linear 0s 1 normal none running marqueeAnimation-5570397;">
+            <div class="js-marquee" style="margin-right: 0px; float: none; margin-bottom: 0px;">
+                @foreach (var item in Model)
+                {
+
+                    <div class="new-products-grid">
+                        <div class="new-products-grid-left">
+                            <a href=" @Url.Action("XemChiTietSP", "SanPham", new {id = item.MaSP })     "><img src="@Url.Content("~/Content/images/" + item.HinhAnh)" alt="@item.TenSP" class="img-responsive"></a>
+                        </div>
+                        <div class="new-products-grid-right">
+                            <h4><a href="@Url.Action("XemChiTietSP", "SanPham", new {id = item.MaSP })    ">@item.TenSP</a></h4>
+                            <div class="simpleCart_shelfItem new-products-grid-right-add-cart">
+                                <span class="item_goc">@item.DonGiaChuaSale.Value.ToString("#,##") <sup>VND</sup></span>
+                                <span class="item_price">@item.DonGia.Value.ToString("#,##") <sup>VND</sup></span>
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                }
+            </div>
+
+
+
+
+        </div>
+    </div>
+    <script type="text/javascript" src="~/Content/js/jquery.marquee.min.js"></script>
+    <script>
+        $('.marqueew').marquee({
+            duration: 9000,
+            gap: 0,
+            delayBeforeStart: 0,
+            direction: 'up',
+            duplicated: false,
+            pauseOnHover: true,
+            startVisible: true
+        });
+    </script>
+</div>

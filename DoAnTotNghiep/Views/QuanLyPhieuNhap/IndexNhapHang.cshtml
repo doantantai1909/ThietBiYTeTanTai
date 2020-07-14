@@ -1,0 +1,164 @@
+﻿@using DoAnTotNghiep.Models;
+@model PhieuNhap
+@{
+    ViewBag.Title = "IndexNhapHang";
+    Layout = "~/Views/Layout/AdminLayout2.cshtml";
+}
+<h2> Nhập Hàng </h2>
+@using (Html.BeginForm())
+{
+    <div class="form-group col-lg-4">
+        <label>Nhà Cung Cấp</label>
+
+        @Html.DropDownList("MaNCC", null, new { @class = "form-control" })
+
+
+    </div>
+    <div class="form-group col-lg-6">
+
+        <label>Ngày Nhập Hàng</label>
+        <input name="NgayNhap" type="date" class="form-control form-control-user col-lg-4" />
+        @Html.ValidationMessageFor(model => model.NgayNhap, "", new { @class = "text-danger" })
+    </div>
+    <div class="clearfix"> </div>
+    <br />
+
+    <table class="table tblChiTietPN">
+        @*Phần chi tiết nhập hàng*@
+        @{IEnumerable<SanPham> lstSanPham = ViewBag.ListSP as IEnumerable<SanPham>;}
+        <tr class="trAppend" style="display:none;">
+            <td>
+                <select class="ddlSanPham" name=" ">
+                    @foreach (var item in lstSanPham)
+                    {
+                        <option value="@item.MaSP"> @item.TenSP</option>
+                    }
+                </select>
+            </td>
+            <td>
+
+                <input name=" " class="txtDonGia" placeholder="0" />
+            </td>
+            <td>
+                <input name=" " class="txtSoLuong" placeholder="0" />
+            </td>
+            <td>
+                <input class="btnDelete btn-danger" style="width:30px;height30px" value="-X-" />
+            </td>
+        </tr>
+        <tr class="trFirstChild" data-id="-1">
+            <td> Sản Phẩm</td>
+            <td> Đơn giá nhập</td>
+            <td> Số lượng nhập</td>
+            <td></td>
+
+        </tr>
+    </table>
+    @* nút button thêm*@
+    <input type="button" value="+" class="btn btn-success" id="btnAdd" />
+    <input type="submit" value="Nhập Hàng" class="btn btn-primary" id="btnNhapHang" />
+}
+<a  href="@Url.Action("DSSPHetHang", "QuanLyPhieuNhap")">Sản Phẩm sắp hết hàng!</a>
+
+
+
+
+
+
+<script>
+    $("#btnNhapHang").click(function () {
+        if (KTDonGia() == false) {
+            return false
+        }
+        if (KTSoLuongNhap() == false) {
+            return false
+        }
+    })
+    // kiểm tra đơn giá
+    function KTDonGia() {
+        var bl = true;
+        // duỵet vòng lặp each
+        $(".txtDonGia").each(function () {
+            var giatri = $(this).val();
+            if (isNaN(giatri) == true) {
+                alert("Đơn giá không hợp lệ!");
+                bl = false;
+                return bl;
+            }
+        });
+        return bl;
+    }
+    // kiểm tra số lượng nhập
+    function KTSoLuongNhap() {
+        var bl = true;
+        // duỵet vòng lặp each
+        $(".txtSoLuong").each(function () {
+            var giatri = $(this).val();
+            if (isNaN(giatri) == true) {
+                alert("Số lượng không hợp lệ!");
+                bl = false;
+                return bl;
+            }
+        });
+        return bl;
+    }
+
+
+    $("#btnAdd").click(function () {
+        // lấy id của tr cuối cùng thuộc thẻ table có class = tblChiTietPN
+        // phương thức find là để tìm đến thẻ nào đó: ở đây là thẻ tr (:last-child) là thẻ tr cuối cùng trong thẻ tblChiTietPN
+        var id_cuoi = $(".tblChiTietPN").find("tr:last-child").attr("data-id");
+        i = parseInt(id_cuoi) + 1;
+        // Nội dung phia trong thẻ trAppend
+        var tdnoidung = $(".trAppend").html();
+        // tạo một thẻ tr bao ngoài nội dung
+        var trnoidung = "<tr class=\"trAppended\" data-id=\"" + i + "\">" + tdnoidung + "</tr>";
+        // lấy thẻ table append vào 1 tr
+        $(".tblChiTietPN").append(trnoidung);
+        loadIDLENTHE();
+    });
+
+    //PHƯƠNG THỨC xử lý lấy thuộc tính attr từ thẻ tr gán xuống chỉ số phần tử các trong thuôc tính name của thẻ input
+    function loadIDLENTHE() {
+        $(".trAppended").each(function () {
+            var id = $(this).attr("data-id");
+            var nameMaSP = "[" + id + "].MaSP";
+            var nameSoLuongNhap = "[" + id + "].SoLuongNhap";
+            var nameDonGiaNhap = "[" + id + "].DonGiaNhap";
+            $(this).find(".ddlSanPham").attr("name", nameMaSP);
+            $(this).find(".txtSoLuong").attr("name", nameSoLuongNhap);
+            $(this).find(".txtDonGia").attr("name", nameDonGiaNhap);
+
+        })
+    };
+
+    function CapNhatID() {
+        // láy lại tr 1
+        var id_cuoi = $(".tblChiTietPN").find(".trFirstChild").attr("data-id");
+        i = parseInt(id_cuoi) + 1;
+
+        $(".trAppended").each(function () {
+            var id = i;
+            $(this).arrt("data-id", i);
+            // cập nhật lại khi xoá id nào đó
+            var nameMaSP = "[" + id + "].MaSP";
+            var nameSoLuongNhap = "[" + id + "].SoLuongNhap";
+            var nameDonGiaNhap = "[" + id + "].DonGiaNhap";
+            $(this).find(".ddlSanPham").attr("name", nameMaSP);
+            $(this).find(".txtSoLuong").attr("name", nameSoLuongNhap);
+            $(this).find(".txtDonGia").attr("name", nameDonGiaNhap);
+            i++;
+        })
+    }
+    // xử lý sự kiện xoá 1 dòng từ nút delete nằm bên trong thẻ tr
+    $("body").on("click", ".btnDelete", function () {
+        // xoá phần tử cha phía ngoài
+        $(this).closest(".trAppended").remove();
+        CapNhatID();
+
+    });
+
+
+
+</script>
+

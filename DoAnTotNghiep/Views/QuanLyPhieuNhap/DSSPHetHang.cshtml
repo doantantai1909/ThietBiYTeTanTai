@@ -1,0 +1,58 @@
+﻿@using DoAnTotNghiep.Models
+@model IEnumerable<SanPham>
+@{
+    ViewBag.Title = "DSSPHetHang";
+    Layout = "~/Views/Layout/AdminLayout2.cshtml";
+    // khởi tạo controll webgrid
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 10);
+}
+
+<h2> Danh sách sản phẩm gần hết hàng</h2>
+<br />
+
+
+@*Thể hiện dữ liệu thông qua controll webgrid*@
+
+
+@grid.GetHtml(
+                 tableStyle: "gridTable", // class css cho thẻ table
+                 headerStyle: "gridHead", // class css cho các thẻ tiêu đề của table
+                 footerStyle: "gridFooter", // class css cho phần phân trang phía dưới
+                 rowStyle: "gridRow", // class css cho phần row lẽ
+                 alternatingRowStyle: "gridAltRow", // class css cho các row chẳn
+                 columns: grid.Columns(
+                     grid.Column("MaSP", "Mã Sản Phẩm"),
+                     grid.Column("TenSP", "Tên Sản Phẩm"),
+                     grid.Column("SoLanMua", "Đã Bán"),
+                     grid.Column("HinhAnh", " Hình Ảnh", format: p => @Html.Raw("<img width=\"400\" height=\"200\" src=\"../Content/images/" + p.HinhAnh + "\">")),
+                     grid.Column(format: p => Html.ActionLink("Nhập Hàng", "NhapHangDon", new { id = p.MaSP }, new {@target= " blank"}))
+                    
+                     ))
+<style>
+    .gridTable {
+        border: 1px solid #808080;
+        width: 100%;
+    }
+
+    .gridHead {
+        border: 1px solid #808080;
+        background-color: lightblue;
+    }
+
+    .gridRow {
+        border: 1px solid #808080;
+    }
+
+    .gridAltRow {
+        border: 1px solid #808080;
+    }
+
+
+    .gridFooter {
+        font-weight: bold;
+        border: 1px solid #808080;
+    }
+</style>
+
+
+

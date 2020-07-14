@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "DemoDN";
+    Layout = "~/Views/Layout/HomeLayout.cshtml";
+}
+<link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link href="~/Content/css/CssLogin/sb-admin-2.min.css" rel="stylesheet">
+<!-- Bootstrap core JavaScript-->
+<script src="~/Content/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="~/Content/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="~/Content/js/JsLogin/sb-admin-2.min.js"></script>
+
+
+
+
+
+<div style="height:500px;">
+    <input type="button" value="Đăng nhập" id="btnDangNhap" class="btn btn-primary" />
+
+
+    <div id="popup_login">
+        
+            <div class="col-lg-6" style="position:fixed;left:325px;top:25px;">
+                <div class="p-5">
+                    <div style="clear:both; text-align:right; margin-bottom:0;">
+                        <span id="close_form" class="btn btn-danger"> X</span>
+                    </div>
+                    <div class="text-center">
+                        <h1 class="h2 text-light "><strong>ĐĂNG NHẬP </strong> </h1>
+                    </div>
+
+                    <form class="user">
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Tài Khoản">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Mật Khẩu">
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox small">
+                                <input type="checkbox" class=" h6 text-light" id="customCheck">
+                                <label class="text-light" for="customCheck">Lưu mật khẩu</label>
+                            </div>
+                        </div>
+                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                            ĐĂNG NHẬP
+                        </a>
+                        <hr>
+                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                            <i class="fab fa-google fa-fw"></i> ĐĂNG NHẬP VỚI GOOGLE
+                        </a>
+                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                            <i class="fab fa-facebook-f fa-fw"></i> ĐĂNG NHẬP VỚI FACEBOOK
+                        </a>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <a class="small text-light" href="forgot-password.html">Quên Mật Khẩu?</a>
+                    </div>
+                    <div class="text-center">
+                        <a class="small text-light" href="register.html">Đăng Ký Tài Khoản!</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        
+
+    </div>
+
+
+</div>
+<style>
+
+
+    #btnDangNhap {
+        float: left;
+    }
+
+
+
+
+
+    /* css cho phần popup_login
+     */
+    #popup_login {
+        position: fixed;
+        background-color: rgba(0,0,0,.7);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+        display: none;
+    }
+</style>
+@* sử dụng jquery hiển thị popup_login*@
+<script type="text/javascript">
+    // hiển thị form đăng nhập
+    $("#btnDangNhap").click(function () {
+        $("#popup_login").slideDown();
+    });
+
+
+
+    //ẩn đi form đăng nhập
+    $("#close_form").click(AnForm);
+
+    //định nghĩa form
+    function AnForm() {
+
+        $("#popup_login").hide();
+
+    }
+
+
+
+</script>
+
+
+
+
+
+

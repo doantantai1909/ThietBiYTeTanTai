@@ -1,0 +1,91 @@
+﻿@model IEnumerable<DoAnTotNghiep.Models.SanPham>
+
+
+@{
+    @* bước 1: phân trang *@
+    int iDem = 0;  // đếm số lượng sản phẩm trên trang
+    int iSLSanPhamTrenTrang = 3; // số lượng sản phẩm trên trang
+    int iTrang = 1; // số trang
+
+}
+
+
+
+
+
+
+<div class="special ">
+
+    <div class="specia-top">
+        <div class="row">
+            <!--  -->
+            @foreach (var item in Model)
+            {
+                if (iDem % iSLSanPhamTrenTrang == 0 && iDem != 0)
+                {
+                    iTrang++;
+                }
+                <div class="@Url.Content("col-md-4 col-sm-4 col-xs-6 col-min-12 Trang"+iTrang.ToString())">
+                    <ul class="grid_2">
+                        <li>
+                            <a href="@Url.Action("XemChiTietSP", "SanPham", new {id = item.MaSP })        "><img src="@Url.Content("~/Content/images/" + item.HinhAnh)" class="img-responsive" alt="@item.TenSP"></a>
+                            <div class="special-info grid_1 simpleCart_shelfItem">
+                                <h5><a href=" @Url.Action("XemChiTietSP", "SanPham", new {id = item.MaSP })     ">@item.TenSP</a></h5>
+                                <div class="item_add">
+                                    <span class="item_price">
+                                        <h6>@item.DonGiaChuaSale <sup> đ</sup>&nbsp;</h6>
+                                        <h4>@item.DonGia <sup> đ</sup></h4>
+                                    </span>
+                                </div>
+                                <div class="item_add">
+                                    <span class="item_price">
+                                        @*<a href=" @Url.Action("ThemGioHang", "GioHang", new {@MaSP=item.MaSP, @strUrl = Request.Url.ToString() })    ">Đặt mua</a>
+                                            Thêm giỏ hàng ajax*@
+                                        @Ajax.ActionLink("Giỏ Hàng", "ThemGioHangAjax", "GioHang", new { @MaSP = item.MaSP, @strUrl = Request.Url.ToString() }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "divGioHang", InsertionMode = InsertionMode.Replace }, null)
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                iDem++;
+            }
+            <div class="page_break page_break_cus1"></div>
+            <!--  -->
+            <div class="clearfix"> </div>
+
+        </div>
+    </div>
+    <div class="Trang">
+        @for (int i = 1; i <= iTrang; i++)
+        {
+            <a class="LinkTrang" data-sotrang="@Url.Content("Trang"+i)" href="#">@i </a>
+        }
+    </div>
+</div>
+@* bước 2: Cho tất cả các trang ẩn hết và chỉ hcho item của trang 1 hiện ra*@
+<style>
+    .col-md-4 {
+        display: none;
+    }
+
+    .Trang1 {
+        display: block;
+    }
+</style>
+@* bước 3: xử lí khi click vào tang nào thì show sản phẩm trang đó*@
+<script>
+    $(".LinkTrang").click(function () {
+        // cho tất cả các trang ẩn đi
+        $(".col-min-12").hide();
+        // lấy ra số trang từ thẻ a
+        var SoTrang = $(this).attr("data-sotrang");
+
+        // Gọi những class nào thuộc số trang đó  hiển thị
+        $("." + SoTrang).show();
+
+
+
+    });
+</script>

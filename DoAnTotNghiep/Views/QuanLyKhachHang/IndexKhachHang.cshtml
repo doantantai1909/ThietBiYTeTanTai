@@ -1,0 +1,73 @@
+﻿@using DoAnTotNghiep.Models
+@model IEnumerable<ThanhVien>
+@{
+    ViewBag.Title = "IndexKhachHang";
+    Layout = "~/Views/Layout/AdminLayout2.cshtml";
+    // khởi tạo controll webgrid
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 20);
+}
+
+<div class="form-group row">
+
+    @*form tìm kiếm ajax*@
+    @using (Ajax.BeginForm("AdminTKTV", "QuanLyKhachHang", new AjaxOptions { UpdateTargetId = "KQTimKiemTV", InsertionMode = InsertionMode.Replace }))
+    {
+        <div class="input-group" style="left:50px;">
+            <input type="text" id="txtTimKiem" value="" name="sTuKhoaTV" placeholder="Nhập tên thành viên..." />
+            <input type="submit" id="btnTimKiem" value="Tìm" />
+        </div>
+    }
+    <div style="clear:both"></div>
+</div>
+<br />
+
+
+@*Thể hiện dữ liệu thông qua controll webgrid*@
+<div id="KQTimKiemTV" style="width: 100%;">
+
+    @grid.GetHtml(
+             tableStyle: "gridTable", // class css cho thẻ table
+             headerStyle: "gridHead", // class css cho các thẻ tiêu đề của table
+             footerStyle: "gridFooter", // class css cho phần phân trang phía dưới
+             rowStyle: "gridRow", // class css cho phần row lẽ
+             alternatingRowStyle: "gridAltRow", // class css cho các row chẳn
+             columns: grid.Columns(
+                 grid.Column("MaThanhVien", "Mã Thành Viên"),
+                 grid.Column("HoTen", "Họ Tên"),
+                 grid.Column("DiaChi", "Địa Chỉ"),
+                  grid.Column("Email", "Email"),
+                   grid.Column("SDT", "Số Điện Thoại")            
+                 ))
+
+
+
+</div>
+
+
+<style>
+    .gridTable {
+        border: 1px solid #808080;
+        width: 100%;
+    }
+
+    .gridHead {
+        border: 1px solid #808080;
+        background-color: lightblue;
+    }
+
+    .gridRow {
+        border: 1px solid #808080;
+    }
+
+    .gridAltRow {
+        border: 1px solid #808080;
+    }
+
+
+    .gridFooter {
+        font-weight: bold;
+        border: 1px solid #808080;
+    }
+</style>
+
+

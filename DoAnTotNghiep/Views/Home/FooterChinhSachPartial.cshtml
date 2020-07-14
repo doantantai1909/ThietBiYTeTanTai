@@ -1,0 +1,44 @@
+﻿@using DoAnTotNghiep.Models;
+@model IEnumerable<ChinhSach>
+
+<div class="col-md-3 col-sm-6 col-xs-6 col-min-12 myac footer-h3">
+    <h4>Chính Sách</h4>
+    <ul class="nav-bottom navi_bottom  navi_bottom_cus1">
+        @foreach (var item in Model)
+        {
+            <li class="li_bottom li_bottom_cus1">
+                <i class="" aria-hidden="true"></i>
+                <a class="a_navi_bottom a_navi_bottom_cus1" href=" @Url.Action("ChiTietChinhSach", "Home", new { id = item.MaChinhSach })">@item.TenChinhSach</a>
+            </li>
+        }
+    </ul>
+</div>
+<script type="text/javascript">
+    // $( document ).ready(function() {
+    $(window).bind("load", function () {
+        var h_1 = $(".footer-h1").height();
+        var h_2 = $(".footer-h2").height();
+        var h_3 = $(".footer-h3").height();
+        var h_4 = $(".footer-h4").height();
+        var max_1 = h_1;
+        var max_2 = h_3;
+        if (h_1 < h_2) max_1 = h_2;
+        if (h_3 < h_4) max_2 = h_4;
+
+        var w_document = $(window).width();
+        // console.log(w_document)
+        if (w_document > 479 && w_document < 992) {
+            if (max_1 != 0) {
+                $(".footer-h1").height(max_1);
+                $(".footer-h2").height(max_1);
+            }
+            if (max_2 != 0) {
+                $(".footer-h3").height(max_2);
+                $(".footer-h4").height(max_2);
+            }
+        }
+    });
+</script>
+
+
+

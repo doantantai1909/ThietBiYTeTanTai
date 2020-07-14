@@ -1,0 +1,39 @@
+﻿@using DoAnTotNghiep.Models;
+@model IEnumerable<SanPham>
+<div class="special">
+    <div class="container">
+        <div class="specia-top">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3 col-sm-4 col-xs-6 col-min-12">
+                        <ul class="grid_2">
+                            <li>
+                                <a href="@Url.Action("XemChiTietSP", "SanPham", new {id = item.MaSP })"><img class="img-responsive" src="@Url.Content("~/Content/images/"+item.HinhAnh)" alt=""></a>
+                                <div class="special-info grid_1 simpleCart_shelfItem">
+                                    <h5><a href="@Url.Action("XemChiTietSP", "SanPham", new {id = item.MaSP })">@item.TenSP</a></h5>
+                                    <div class="item_add">
+                                        <span class="item_price">
+                                            <h6>@item.DonGiaChuaSale.Value.ToString("#,##") <sup> VND</sup></h6>
+                                            <h4>@item.DonGia.Value.ToString("#,##") <sup> VND</sup></h4>
+                                        </span>
+                                    </div>
+                                    <div class="item_add">
+                                        <span class="item_price">
+                                            @* <a href=" @Url.Action("ThemGioHang", "GioHang", new {@MaSP=item.MaSP, @strUrl = Request.Url.ToString() })    ">Đặt mua</a>
+                                                Thêm giỏ hàng ajax*@
+                                            @Ajax.ActionLink("Giỏ Hàng", "ThemGioHangAjax", "GioHang", new { @MaSP = item.MaSP, @strUrl = Request.Url.ToString() }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "divGioHang", InsertionMode = InsertionMode.Replace }, null)
+                                        </span>
+                                    </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                }
+                <div class="clearfix"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

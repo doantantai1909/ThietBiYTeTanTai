@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "DanhSachQuyen";
+    Layout = "~/Views/Layout/AdminLayout2.cshtml";
+      // khởi tạo controll webgrid
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 10);
+}
+
+@using DoAnTotNghiep.Models
+@model IEnumerable<Quyen>
+
+
+<h2>Danh Sách Quyền</h2>
+
+@Html.ActionLink("Thêm Quyền Quản Trị", "ThemQuyen", null, new { @class = "btn btn-success" })
+<br />
+<br />
+
+@*Thể hiện dữ liệu thông qua controll webgrid*@
+
+<div id="KQTimKiemTT" style="width: 100%; ">
+    @grid.GetHtml(
+             tableStyle: "gridTable", // class css cho thẻ table
+             headerStyle: "gridHead", // class css cho các thẻ tiêu đề của table
+             footerStyle: "gridFooter", // class css cho phần phân trang phía dưới
+             rowStyle: "gridRow", // class css cho phần row lẽ
+             alternatingRowStyle: "gridAltRow", // class css cho các row chẳn
+             columns: grid.Columns(
+                 grid.Column("MaQuyen", "Mã Quyền"),
+                 grid.Column("TenQuyen", "Tên Quyền Quản Lý"),
+                 grid.Column(format: p => Html.ActionLink("Chỉnh Sửa", "SuaQuyen", new { id = p.MaQuyen })),
+                 grid.Column(format: p => Html.ActionLink("Xoá", "XoaQuyen", new { id = p.MaQuyen }))
+                 ))
+
+
+
+</div>
+
+
+<style>
+    .gridTable {
+        border: 1px solid #808080;
+        width: 100%;
+    }
+
+    .gridHead {
+        border: 1px solid #808080;
+        background-color: lightblue;
+    }
+
+    .gridRow {
+        border: 1px solid #808080;
+    }
+
+    .gridAltRow {
+        border: 1px solid #808080;
+    }
+
+
+    .gridFooter {
+        font-weight: bold;
+        border: 1px solid #808080;
+    }
+</style>
+
+

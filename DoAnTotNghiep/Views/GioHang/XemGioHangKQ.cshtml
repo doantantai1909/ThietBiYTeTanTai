@@ -1,0 +1,24 @@
+﻿@using DoAnTotNghiep.Models;
+@model List<ItemGioHang>
+@{
+    ViewBag.Title = "XemGioHangKQ";
+    Layout = "~/Views/Layout/SanPhamLayout.cshtml";
+}
+
+    <div class="col-md-9 products-grid-right">
+        <h3>GIỎ HÀNG</h3>
+
+        <div class="shopping-cart">
+            <div class="empty_cart">Bạn đã đặt hàng thành công!</div>
+        </div>
+
+
+        <div style="text-align:right; margin-left:480px;">
+            
+            @Html.ActionLink("Quay lại", "Index", "Home")
+
+        </div>
+
+
+    </div>
+

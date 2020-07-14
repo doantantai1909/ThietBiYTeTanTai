@@ -1,0 +1,162 @@
+﻿@using DoAnTotNghiep.Models;
+@model SanPham
+@{
+    ViewBag.Title = "XemChiTietSP";
+    Layout = "~/Views/Layout/SanPhamLayout.cshtml";
+}
+
+<script>
+
+         document.title = '@Html.Raw( Model.TenSP.Trim())';
+</script>
+<script type="text/javascript" src="~/Content/js/jquery.simple-gallery.min.js"></script>
+<script type="text/javascript" src="~/Content/js/jquery.simple-lens.min.js"></script>
+<link rel="stylesheet" type="text/css" href="~/Content/css/jquery.simple-lens.css">
+<link rel="stylesheet" type="text/css" href="~/Content/css/jquery.simple-gallery.css">
+<script>
+    $(document).ready(function () {
+        $('#demo-1 .simpleLens-thumbnails-container img').simpleGallery({
+            loading_image: '../../Content/images/loading.gif',
+            show_event: 'click'
+        });
+
+        $('#demo-1 .simpleLens-big-image').simpleLens({
+            loading_image: '../../Content/images/loading.gif'
+        });
+    });
+</script>
+<div class="col-md-9 products-grid-right">
+    <div class="special ">
+        <h3>@Model.TenSP</h3>
+        <div class="specia-top">
+            <!--  -->
+            <div class=" detai_sanpham">
+                <div class="breadcrumb">
+                    <a href="San-pham.html" class="linky">
+                        <span>Sản phẩm</span>
+                    </a><span class="">»</span><a href="" class="linky">
+                        <span>@Model.TenSP</span>
+                    </a>
+                </div>
+                <div class="main_content_top main_content_top_cus1">
+
+                    <script>
+                        $(document).ready(function () {
+                            $('#demo-1 .simpleLens-thumbnails-container img').simpleGallery({
+                                loading_image: 'demo/images/loading.gif',
+                                show_event: 'click'
+                            });
+                            $('#demo-1 .simpleLens-big-image').simpleLens({
+                                loading_image: 'demo/images/loading.gif'
+                            });
+                        });
+                    </script>
+                    <div class="simpleLens-gallery-container main_col_left main_col_left_cus1" id="demo-1">
+
+                     
+
+
+                        <div class="simpleLens-container">
+            <div class="simpleLens-big-image-container">
+                <a class="simpleLens-lens-image" data-lens-image="@Url.Content("~/Content/images/" + Model.HinhAnh)">
+                    <img alt="@Model.TenSP" class="simpleLens-big-image" src="@Url.Content("~/Content/images/" + Model.HinhAnh)">
+                </a>
+            </div>
+        </div>
+        <div class="simpleLens-thumbnails-container body_thumb_content body_thumb_content_cus1">
+            <a href="JavaScript:void(0);" class="simpleLens-thumbnail-wrapper"
+               data-lens-image="@Url.Content("~/Content/images/" + Model.HinhAnh)"
+               data-big-image="@Url.Content("~/Content/images/" + Model.HinhAnh)">
+                <img class="border_images" src="@Url.Content("~/Content/images/" + Model.HinhAnh)" width="50">
+            </a>
+        </div>
+                    </div>
+                    <div class="main_col_right main_col_right_cus1">
+                        <div style="padding:8px;" class="text_color">
+                            <div class="comment_nho"><span id="love_2660164">0</span> yêu thích</div>
+                            <div class="comment_nho"><span id="want_2660164">0</span> muốn mua</div>
+                        </div>
+                        <div class="clear"></div>
+                        <h1 class="main_right_title">@Html.Raw(HttpUtility.HtmlDecode(Model.GioiThieuSP))</h1>
+                        <div class="clear"></div>
+                        <div class="line_top_1 line_top_cus1"></div>
+                        <div class="global_ghichu_1 global_ghichu_2">
+                            <h1><span style="font-size:12px;">@Html.Raw(HttpUtility.HtmlDecode(Model.GioiThieuSP))</span></h1>
+                        </div>
+                        <div class="clear"></div>
+                        <span class="glo-tgiagoc" style="display:none">Giá bán</span>
+                        <span class="del del_cus1"><strike>@Model.DonGiaChuaSale.Value.ToString("#,##") <sup> VND</sup> </strike></span>
+                        <div class="gia_thanhtien gia_thanhtien_cus1"><span class="glo-tgiakm" style="display:none">Giá giảm</span>@Model.DonGia.Value.ToString("#,##") <sup> VND</sup></div>
+                        <div class="product_details_cart">
+
+                            <!-- update by 1k 24-3-2017 v1-->
+                            <div class="product-quantity">
+                                <div class="numbers-row">
+                                    <div class="buttontext left" onclick="ADD_num_quantity('-')">-</div>
+                                    <input class="intext left" type="text" name="quantity" value="1" id="input-quantity">
+                                    <div class="buttontext left" onclick="ADD_num_quantity('+')">+</div>
+                                    <!--update by 5k 26-7-2016-->
+                                    <div class="left icon_body icon_body_sosanh_cus1"><a href="JavaScript:ajax_action(2660164,2);"><i class="fa fa-retweet"></i></a></div>
+                                    <div class="left icon_body icon_body_love_cus1"><a href="JavaScript:ajax_action(2660164,1);"><i class="fa fa-heart-o"></i></a></div>
+                                    <!--end update by 5k 26-7-2016--> <div class="left icon_body icon_body_love_cus1"><a href="@Url.Content("~/Content/images/" + Model.HinhAnh)" class="lightbox"><i class="fa fa-search-plus"></i></a></div>
+                                </div>
+                            </div>
+                            <div class="product-bottom">
+                                @*<a href=" @Url.Action("ThemGioHang", "GioHang", new {@MaSP=@Model.MaSP, @strUrl = Request.Url.ToString() })
+                                    " class="btn btn-primary"> Thêm vào giỏ</a>*@
+                                <div class="item_add">
+                                    <span class="item_price">
+                                        @* Thêm giỏ hàng ajax*@
+                                        @Ajax.ActionLink("Thêm vào giỏ", "ThemGioHangAjax", "GioHang", new { @MaSP = @Model.MaSP, @strUrl = Request.Url.ToString() }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "divGioHang", InsertionMode = InsertionMode.Replace }, null)
+
+
+                                    </span>
+
+
+                                </div>
+
+
+                            </div>
+
+                            <!-- end update by 1k 24-3-2017 v1-->
+
+
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <h3> Thông Tin Sản Phẩm </h3>
+                <div class="main_content_body main_content_body_cus1">
+                    @Html.Raw(Model.MoTa)
+                    <script>
+                        var div_fb_like = document.getElementById('fb-like');
+                        if (div_fb_like) {
+                            div_fb_like.setAttribute('data-width', div_fb_like.parentNode.offsetWidth);
+                        }
+                    </script>
+                    <div class="clear"></div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+
+            <ol class="breadcrumb breadcrumb1">
+                <li>Sản phẩm liên quan</li>
+            </ol>
+            <div class="clearfix"> </div>
+
+
+
+
+
+
+
+
+            <div class="clearfix"> </div>
+
+            @Html.Action("SPtuongtu", "SanPham")
+            <div class="clear"></div>
+            <!--  -->
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>

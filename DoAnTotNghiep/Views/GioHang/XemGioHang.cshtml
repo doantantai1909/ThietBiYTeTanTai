@@ -1,0 +1,203 @@
+﻿@using DoAnTotNghiep.Models;
+
+@model List<ItemGioHang>
+
+@{
+    ViewBag.Title = "XemGioHang";
+    Layout = "~/Views/Layout/SanPhamLayout.cshtml";
+}
+
+
+
+    <div class="col-md-9 products-grid-right">
+        <h3>GIỎ HÀNG</h3>
+
+        @if (Model == null || Model.Count == 0)
+        {
+            <div class="shopping-cart">
+                <div class="empty_cart">Giỏ Hàng Rỗng!</div>
+            </div>
+        }
+        else
+        {
+            <table class="table">
+                <tr>
+                    <td> Tên SP</td>
+                    <td> Hình Ảnh</td>
+                    <td> Số Lượng</td>
+                    <td> Đơn Giá</td>
+                    <td> Thành Tiền</td>
+
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td> @item.TenSP</td>
+                        <td><img src="@Url.Content("~/Content/images/" + item.HinhAnh)" width="50" height="50" /> </td>
+                        <td> @item.SoLuong</td>
+                        <td> @item.DonGia.ToString("#,##") đồng</td>
+                        <td> @item.ThanhTien.ToString("#,##")</td>
+                        <td>
+                            @Html.ActionLink("Sửa", "SuaGioHang", new { @MaSP = item.MaSP })
+                            @Html.ActionLink("Xoá", "XoaGioHang", new { @MaSP = item.MaSP })
+                        </td>
+
+                    </tr>
+
+
+                }
+            </table>
+            <div class="clear"></div>
+
+            <div>
+                <table style="text-align:right; margin-left:515px;">
+                    <tr>
+                        <td><b>Tổng thanh toán: &nbsp;</b>  </td>
+                        <td>  @ViewBag.TongTien.ToString("#,##")VND </td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <br />
+            <div class="clear"></div>
+
+            using (Html.BeginForm("GiamGia", "GioHang"))
+            {
+                <div>
+                    <table style="margin-left:410px">
+                        <tr>
+                            <td><b>Mã giảm giá:&nbsp;&nbsp;</b> </td>
+                            <td> @Html.TextBox("MaGG") &nbsp;</td>
+                            <td>
+                                <input style="color:darkorange" type="submit" value="Kiểm tra" id="btnMGG" />
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+                <div class="clear"></div>
+            }
+
+
+            if (Session["MGG"] != null)
+            {
+                @*Html.Action("GiamGia", "GioHang")*@
+                <div>
+                    <table style="text-align:right; margin-left:450px;">
+                        <tr>
+                            <td><b>Tổng thanh toán (đã giảm): &nbsp;</b>  </td>
+                            <td>  @ViewBag.TongDaGiam.ToString("#,##")VND </td>
+                        </tr>
+
+                    </table>
+                </div>
+            }
+
+
+
+            <br />
+            <div class="clear"></div>
+
+
+
+
+            using (Html.BeginForm("DatHang", "GioHang"))
+            {
+
+                if (Session["LuuTaiKhoan"] == null)
+                {
+                    @* Thiết kế form cho khách vãng lai mua hàng *@
+                    <div class="ThongTinMuaHang">
+                        <table align="center" class="table">
+                            <tr>
+                                <td align="center" colspan="2"> <b> Thông Tin Khách Hàng</b></td>
+                            </tr>
+                            <tr>
+                                <td> Họ và Tên:</td>
+
+                                <td> @Html.TextBox("TenKH")  <p style="color:red; " id="TB_LoiTenKH"></p> </td>
+
+                            </tr>
+                            <tr>
+                                <td> Địa Chỉ:</td>
+                                <td> @Html.TextBox("DiaChi") <p style="color:red; " id="TB_LoiDiaChi"></p></td>
+
+                            </tr>
+                            <tr>
+                                <td> Email:</td>
+                                <td> @Html.TextBox("Email")   <p style="color:red; " id="TB_LoiEmail"></p></td>
+
+                            </tr>
+                            <tr>
+                                <td> Số Điện Thoại:</td>
+                                <td> @Html.TextBox("SDT") <p style="color:red; " id="TB_LoiSDT"></p></td>
+                            </tr>
+                            <tr>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="divDatHang" style="text-align:right;">
+                        <input style="color:darkorange" type="submit" value="Đặt Hàng" id="btnDatHang" />
+                        @Html.ActionLink("Mua Tiếp", "Index", "Home")
+
+
+                        <script>
+                            $("#btnDatHang").click(function () {
+                                var loi = 0;
+                                if ($("#TenKH").val() == 0) {
+                                    $("#TB_LoiTenKH").text("Tên Khách Hàng không được để trống");
+                                    loi++;
+                                }
+                                else {
+                                    $("#TB_LoiTenKH").text("");
+                                }
+                                if ($("#DiaChi").val() == 0) {
+                                    $("#TB_LoiDiaChi").text("Địa Chỉ không được để trống");
+                                    loi++;
+                                }
+                                else {
+
+                                    $("#TB_LoiDiaChi").text("");
+                                }
+                                if ($("#SDT").val() == 0 || $("#SDT").val().length() < 10) {
+                                    $("#TB_LoiSDT").text("Số điện thoại không được để trống hoặc sai định dạng");
+                                    loi++;
+                                }
+                                else {
+
+                                    $("#TB_LoiSDT").text("");
+                                }
+
+                                dinhdangEmail = /^([a-zA-Z0-9_\.\-])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                                KTemail = dinhdangEmail.test($("#Email").val());
+
+                                if (!KTemail) {
+                                    $("#TB_LoiEmail").text("Email không được để trống hoặc sai định dạng");
+                                    loi++;
+                                }
+                                else {
+                                    $("#TB_LoiEmail").text("");
+                                }
+                                if (loi != 0) {
+                                    // ngăn sự kiện submit đến sever
+                                    return false;
+                                }
+                            });
+                        </script>
+                    </div>
+                }
+                else
+                {
+                    <div class="divDatHang" style="text-align:right;">
+                        <input style="color:darkorange" type="submit" value="Đặt Hàng" id="btnDatHang" />
+                        @Html.ActionLink("Mua Tiếp", "Index", "Home")
+
+                    </div>
+                }
+
+            }
+        }
+    </div>

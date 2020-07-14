@@ -1,0 +1,74 @@
+﻿@model IEnumerable<DoAnTotNghiep.Models.DichVu>
+@{
+    ViewBag.Title = "AdminTKDV";
+    Layout = "~/Views/Layout/AdminLayout2.cshtml";
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 10);
+}
+    <div id="KQTimKiemDV" style="width: 100%; ">
+        <div class="form-group row">
+            @Html.ActionLink("Thêm dịch vụ mới", "ThemDV", null, new { @class = "btn btn-success" })
+
+
+            @*  form tìm kiếm ajax*@
+            @using (Ajax.BeginForm("AdminTKDV", "QuanLyWebsite", new AjaxOptions { UpdateTargetId = "KQTimKiemDV", InsertionMode = InsertionMode.Replace }))
+            {
+                <div class="input-group" style="left:50px;">
+                    <input type="text" id="txtTimKiem" value="" name="sTuKhoaDV" placeholder="Nhập vào tiêu đề cần tìm...." />
+                    <input type="submit" id="btnTimKiem" value="Tìm" />
+                </div>
+            }
+            <div style="clear:both"></div>
+        </div>
+        <br />
+
+
+        @*Thể hiện dữ liệu thông qua controll webgrid*@
+
+
+        @grid.GetHtml(
+                 tableStyle: "gridTable", // class css cho thẻ table
+                 headerStyle: "gridHead", // class css cho các thẻ tiêu đề của table
+                 footerStyle: "gridFooter", // class css cho phần phân trang phía dưới
+                 rowStyle: "gridRow", // class css cho phần row lẽ
+                 alternatingRowStyle: "gridAltRow", // class css cho các row chẳn
+                 columns: grid.Columns(
+                     grid.Column("MaDichVu", "Mã Dịch Vụ"),
+                     grid.Column("TieuDeDichVu", "Tiêu Đề"),
+                     grid.Column("SDT", "Số Điện Thoại"),
+                      grid.Column("NgayDang", "Ngày Đăng"),
+                      grid.Column("DiaChi", "Địa Chỉ"),
+                     grid.Column(format: p => Html.ActionLink("Chỉnh Sửa", "ChinhSuaDV", new { id = p.MaDichVu })),
+                     grid.Column(format: p => Html.ActionLink("Xoá", "XoaDV", new { id = p.MaDichVu }))
+                     ))
+
+
+
+    </div>
+
+
+<style>
+    .gridTable {
+        border: 1px solid #808080;
+        width: 100%;
+    }
+
+    .gridHead {
+        border: 1px solid #808080;
+        background-color: lightblue;
+    }
+
+    .gridRow {
+        border: 1px solid #808080;
+    }
+
+    .gridAltRow {
+        border: 1px solid #808080;
+    }
+
+
+    .gridFooter {
+        font-weight: bold;
+        border: 1px solid #808080;
+    }
+</style>
+

@@ -1,0 +1,171 @@
+﻿@model DoAnTotNghiep.Models.SanPham
+
+@{
+    ViewBag.Title = "Xoá Sản phẩm";
+    Layout = "~/Views/Layout/AdminLayout2.cshtml";
+}
+
+@* Bước 1: sử dụng controldatetimepicker chèn javâ*@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+@* sử dụng control editer tinymce*@
+<script src="https://cdn.tiny.cloud/1/0eutz8fhwndtobnepv1o0mmgmijxkz66djywal8plxglxui9/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+    tinymce.init({
+        selector: "textarea",
+        plugins: "a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker",
+        toolbar: "a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table",
+        toolbar_mode: "floating",
+        tinycomments_mode: "embedded",
+        tinycomments_author: "Author name"
+    });
+</script>
+
+@*Bước 2: xây dựng 1 funtion để điều hướng html  theo dạng control datepicker*@
+<script>
+    $(function () {
+        $(".col-lg-4").datepicker();
+    });
+</script>
+
+
+
+
+
+<h2>Bạn có chắc muốn xoá sản phẩm này?</h2>
+@* Bước 1 kh thêm hình ảnh*@
+@using (Html.BeginForm("Xoa", "QuanLySanPham", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.Hidden("MaSP", Model.MaSP);
+
+
+        <div class="form-group row">
+            <div class="form-group col-lg-5">
+                <label>Tên Sản Phẩm</label>
+                <input type="text" required="" maxlength="50" class="form-control form-control-user col-lg-10" id="TenSP" name="TenSP" value="@Model.TenSP">
+                @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-lg-3">
+                <label>Giá Sản Phẩm</label>
+                <input type="number" required="" maxlength="50" class="form-control form-control-user col-lg-6" id="DonGia" name="DonGia" value="@Model.DonGia">
+                @Html.ValidationMessageFor(model => model.DonGia, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-lg-3">
+                <label>Giá Sản Phẩm chưa giảm</label>
+                <input type="number" required="" maxlength="50" class="form-control form-control-user col-lg-6" id="DonGiaChuaSale" name="DonGiaChuaSale" value="@Model.DonGiaChuaSale">
+                @Html.ValidationMessageFor(model => model.DonGiaChuaSale, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="form-group col-lg-3">
+                <label>Nhà Cung Cấp</label>
+
+                @Html.DropDownList("MaNCC", null, new { @class = "form-control" })
+
+
+            </div>
+
+            <div class="form-group col-lg-3">
+                <label>Nhà Sản Xuất</label>
+
+                @Html.DropDownList("MaNSX", null, new { @class = "form-control" })
+
+            </div>
+
+            <div class="form-group col-lg-3">
+                <label>Loại Sản Phẩm</label>
+
+                @Html.DropDownList("MaLoaiSP", null, new { @class = "form-control" })
+
+
+            </div>
+        </div>
+
+        <div class="form-group row">
+
+
+            <div class="form-group col-lg-3">
+                <label>Số Lượng Sản Phẩm</label>
+                @Html.EditorFor(model => model.SoLuongTon, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SoLuongTon, "", new { @class = "text-danger" })
+
+            </div>
+
+
+            <div class="form-group col-lg-6">
+
+                <label>Ngày Cập Nhập</label>
+                @if (Model.NgayCapNhap != null)
+                {
+                    <input name="NgayCapNhap" type="date" class="form-control form-control-user col-lg-4" value="@Model.NgayCapNhap" />
+
+                    @Html.ValidationMessageFor(model => model.NgayCapNhap, "", new { @class = "text-danger" })
+                }
+            </div>
+
+
+        </div>
+
+
+
+
+        <div class="form-group row">
+            <label>......Hình Ảnh Sản Phẩm (Nhập ít nhất 1 hình)</label>
+        </div>
+        <div class="form-group row">
+
+            <div class="form-group col-lg-2">
+
+                <input type="file"  class="form-control form-control-user " id="HinhAnh" name="HinhAnh" placeholder="">
+                <img src="@Url.Content("~/Content/images/" + Model.HinhAnh)" width="100px" height="50" />
+
+            </div>
+            <div class="form-group col-lg-2">
+                <input type="file" class="form-control form-control-user " id="HinhAnh2" name="HinhAnh2" placeholder="Hình Ảnh Sản Phẩm">
+                <img src="@Url.Content("~/Content/images/" + Model.HinhAnh2)" width="100px" height="50" />
+
+            </div>
+            <div class="form-group col-lg-2">
+                <input type="file" class="form-control form-control-user " id="HinhAnh3" name="HinhAnh3" placeholder="Hình Ảnh Sản Phẩm">
+                <img src="@Url.Content("~/Content/images/" + Model.HinhAnh3)" width="100px" height="50" />
+
+            </div>
+            <div class="form-group col-lg-2">
+                <input type="file" class="form-control form-control-user " id="HinhAnh4" name="HinhAnh4" placeholder="Hình Ảnh Sản Phẩm">
+                <img src="@Url.Content("~/Content/images/" + Model.HinhAnh4)" width="100px" height="50" />
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Giới Thiệu Sản Phẩm</label>
+            <div class="col-md-10">
+                <textarea name="GioiThieuSP" class="textarea">@Model.GioiThieuSP</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Mô Tả Sản Phẩm</label>
+            <div class="col-md-10">
+                <textarea name="MoTa" class="textarea">@Model.MoTa</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Xoá" class="btn btn-danger" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Quay lại!", "QuanLySanPham")
+</div>

@@ -1,0 +1,79 @@
+﻿@using DoAnTotNghiep.Models
+@model IEnumerable<TuyenDung>
+@{
+    ViewBag.Title = "QuanLyTuyenDung";
+    Layout = "~/Views/Layout/AdminLayout2.cshtml";
+    // khởi tạo controll webgrid
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 10);
+}
+
+<div class="form-group row">
+    @Html.ActionLink("Thêm Tin Tuyển Dụng", "ThemTD", null, new { @class = "btn btn-success" })
+
+
+    @*  form tìm kiếm ajax*@
+    @using (Ajax.BeginForm("AdminTKTD", "QuanLyWebsite", new AjaxOptions { UpdateTargetId = "KQTimKiemTD", InsertionMode = InsertionMode.Replace }))
+    {
+        <div class="input-group" style="left:50px;">
+            <input type="text" id="txtTimKiem" value="" name="sTuKhoaTD" placeholder="Nhập tin tuyển dụng cần tìm...." />
+            <input type="submit" id="btnTimKiem" value="Tìm" />
+        </div>
+    }
+    <div style="clear:both"></div>
+</div>
+<br />
+
+
+@*Thể hiện dữ liệu thông qua controll webgrid*@
+
+<div id="KQTimKiemTD" style="width: 100%; ">
+    @grid.GetHtml(
+             tableStyle: "gridTable", // class css cho thẻ table
+             headerStyle: "gridHead", // class css cho các thẻ tiêu đề của table
+             footerStyle: "gridFooter", // class css cho phần phân trang phía dưới
+             rowStyle: "gridRow", // class css cho phần row lẽ
+             alternatingRowStyle: "gridAltRow", // class css cho các row chẳn
+             columns: grid.Columns(
+                 grid.Column("MaTuyenDung", "Mã Tuyển Dụng"),
+                 grid.Column("TieuDeTuyenDung", "Tên Tin Tuyển Dụng"),
+                 grid.Column("NgayDang", "Ngày Đăng"),
+                  grid.Column("DiaChi", "Địa Chỉ"),
+                    grid.Column("HinhAnh", " Hình Ảnh", format: p => @Html.Raw("<img width=\"300\" height=\"100\" src=\"../Content/images/" + p.HinhAnh + "\">")),
+               
+                 grid.Column(format: p => Html.ActionLink("Chỉnh Sửa", "ChinhSuaTD", new { id = p.MaTuyenDung })),
+                 grid.Column(format: p => Html.ActionLink("Xoá", "XoaTD", new { id = p.MaTuyenDung }))
+                 ))
+
+
+
+</div>
+
+
+<style>
+    .gridTable {
+        border: 1px solid #808080;
+        width: 100%;
+    }
+
+    .gridHead {
+        border: 1px solid #808080;
+        background-color: lightblue;
+    }
+
+    .gridRow {
+        border: 1px solid #808080;
+    }
+
+    .gridAltRow {
+        border: 1px solid #808080;
+    }
+
+
+    .gridFooter {
+        font-weight: bold;
+        border: 1px solid #808080;
+    }
+</style>
+
+
+

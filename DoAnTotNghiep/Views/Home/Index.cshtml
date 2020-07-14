@@ -1,0 +1,37 @@
+﻿@using DoAnTotNghiep.Models;
+@model IEnumerable<SanPham>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Layout/HomeLayout.cshtml";
+}
+@{
+    IEnumerable<SanPham> lstSP = ViewBag.ListSP as IEnumerable<SanPham>;
+    IEnumerable<TinTuc> ltt = ViewBag.ltt as IEnumerable<TinTuc>;
+    IEnumerable<DichVu> ldv = ViewBag.ldv as IEnumerable<DichVu>;
+    IEnumerable<GioiThieu> lgt = ViewBag.lgt as IEnumerable<GioiThieu>;
+}
+<section class="content gallery pad1" style="padding:0">
+    @Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", lgt)
+</section>
+<section class="content gallery pad1" style="padding:0">
+    <div style="font-weight: bold; margin-top: 20px; text-align: center; color:#3366FF ">
+        <h2> TIN TỨC NỔI BẬT </h2>
+    </div>
+    @Html.Partial("~/Views/Home/TinTucTuc.cshtml", ltt)
+</section>
+<section class="content gallery pad1" style="padding:0">
+    <div style="font-weight: bold; margin-top: 20px; text-align: center; color:#3366FF ">
+        <h2> DỊCH VỤ Y TẾ</h2>
+    </div>
+    @Html.Partial("~/Views/Home/DichVuVu.cshtml", ldv)
+</section>
+<section class="content gallery pad1" style="padding:0">
+    <div style="font-weight: bold; margin-top: 20px; text-align: center; color:#3366FF ">
+        <h2> SẢN PHẨM BÁN CHẠY</h2>
+    </div>
+    @Html.Partial("~/Views/SanPham/SanPhamStyle2Partial.cshtml", lstSP)
+</section>
+
+
+
+ 

@@ -1,0 +1,35 @@
+﻿@using DoAnTotNghiep.Models;
+@model IEnumerable<TinTuc>
+<div class="dv_content_leftsp">
+    <h3>TIN TỨC MỚI</h3>
+    <div class="marqueew" style="height: 400px;">
+        <div class="js-marquee-wrapper" style="margin-top: 0px; animation: 103.194s linear 0s  normal none running marqueeAnimation-97420680;">
+            <div class="js-marquee" style="margin-right: 0px; float: none; margin-bottom: 0px;">
+                <div id="newsRight">
+                    @foreach (var item in Model)
+                    {
+                        <a href="  @Url.Action("ChiTietTinTuc", "Home", new {id = item.MaTinTuc })      " title=" @item.TieuDeTinTuc">
+                            <img src="@Url.Content("~/Content/images/" + item.HinhAnh)" width="230" alt="@item.TieuDeTinTuc ">
+                            <h4> @item.TieuDeTinTuc</h4>
+                            <div class="clear"></div>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+      
+        <script>
+            $('.marqueew').marquee({
+            duration: 9000,
+            gap: 0,
+            delayBeforeStart: 0,
+            direction: 'up',
+            duplicated: false,
+            pauseOnHover: true,
+            startVisible: true
+        });
+
+        </script>
+
+    </div>
+</div>

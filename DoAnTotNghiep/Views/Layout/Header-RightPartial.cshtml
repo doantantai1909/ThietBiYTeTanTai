@@ -1,0 +1,193 @@
+﻿@using DoAnTotNghiep.Models
+<div class="header_right">
+    <div class="rgt-bottom">
+        <div class="clearfix"> </div>
+    </div>
+    <div class="se-ca">
+        @*Chèn partial view icon gio hàng sang 1 partial view mới*@
+        @Html.Action("GioHangPartial", "GioHang")
+        <div class="search">
+            @using (Html.BeginForm("LayTuKhoaTimKiem", "TimKiem"))
+            {
+                <input type="text" name="sTuKhoa" value="" placeholder="Nhập nội dung tìm kiếm...">
+                <img src="~/Content/images/search.png">
+                @*<input type="submit"  >*@
+            }
+        </div>
+        <div class="clearfix"> </div>
+        @if (Session["LuuTaiKhoan"] != null && Session["LuuTaiKhoan"] != " ")
+        {
+            ThanhVien tv = (ThanhVien)Session["LuuTaiKhoan"];
+            if (tv.TaiKhoan.ToString() == "Admin1" || tv.TaiKhoan.ToString() == "Admin2" || tv.TaiKhoan.ToString() == "NhanVien1" || tv.TaiKhoan.ToString() == "NhanVien2")
+            {
+                <div style=" text-align:right">
+
+                    @Html.ActionLink("Quản Lý Website", "IndexAdmin2", "Admin2")
+                    @* <a id="btnDangNhapAdmin" href=" # "> <strong> Quản Lý Website &nbsp;  </strong></a>*@
+                    <span>  &nbsp;  Chào @tv.Hoten &nbsp;    @Html.ActionLink("Đăng Xuất", "DangXuat", "Home") </span>
+                </div>
+            }
+            else
+            {
+                <div style=" text-align:right">
+                    <span> Chào @tv.Hoten &nbsp;    @Html.ActionLink("Đăng Xuất", "DangXuat", "Home")</span>
+                </div>
+            }
+        }
+        else
+        {
+            <div style=" text-align:right">
+                <a id="btnDangNhap" href=" # "> <strong> Đăng Nhập &nbsp;  </strong></a>
+                <a href="@Url.Action("DangKy", "Home")  "><strong> Đăng Ký</strong> </a>
+            </div>
+        }
+    </div>
+</div>
+<link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link href="~/Content/css/CssLogin/sb-admin-2.min.css" rel="stylesheet">
+<!-- Bootstrap core JavaScript-->
+<script src="~/Content/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="~/Content/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="~/Content/js/JsLogin/sb-admin-2.min.js"></script>
+<div>
+    <div id="popup_login">
+        <div class="col-lg-6" style="position:fixed;left:325px;top:25px;">
+            <div class="p-5">
+                <div style="clear:both; text-align:right; margin-bottom:0;">
+                    <span id="close_form" class="btn btn-danger"> X</span>
+                </div>
+                <div class="text-center">
+                    <h1 class="h2 text-light "><strong>ĐĂNG NHẬP </strong> </h1>
+                </div>
+                @using (Ajax.BeginForm("DangNhap", "Home", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "ThongBaoSai" }))
+                {
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-user" required="" id="TaiKhoanDN" name="TaiKhoanDN" placeholder="Tài Khoản">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control form-control-user" required="" id="MatKhauDN" name="MatKhauDN" placeholder="Mật Khẩu">
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox small">
+                            <input type="checkbox" class=" h6 text-light" id="customCheck">
+                            <label class="text-light" for="customCheck">Lưu mật khẩu</label>
+                        </div>
+                    </div>
+                    <h3 style="font-weight:bold; color:red; text-align:center " id="ThongBaoSai">  </h3>
+                    <input value="ĐĂNG NHẬP" type="submit" class="btn btn-primary btn-user btn-block" />
+                    <hr>
+                    <a href="#" class="btn btn-google btn-user btn-block">
+                        <i class="fab fa-google fa-fw"></i> ĐĂNG NHẬP VỚI GOOGLE
+                    </a>
+                    <a href="#" class="btn btn-facebook btn-user btn-block">
+                        <i class="fab fa-facebook-f fa-fw"></i> ĐĂNG NHẬP VỚI FACEBOOK
+                    </a>
+                    <hr>
+                    <div class="text-center">
+                        <a class="small text-light" href="#">Quên Mật Khẩu?</a>
+                    </div>
+                    <div class="text-center">
+                        <a class="small text-light" href="@Url.Action("DangKy", "Home")">Đăng Ký Tài Khoản!</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    /* css cho phần popup_login */
+    #popup_login {
+        position: fixed;
+        background-color: rgba(0,0,0,.9);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+        display: none;
+    }
+</style>
+@* sử dụng jquery hiển thị popup_login*@
+<script type="text/javascript">
+    // hiển thị form đăng nhập
+    $("#btnDangNhap").click(function () {
+        $("#popup_login").slideDown();
+    });
+    //ẩn đi form đăng nhập
+    $("#close_form").click(AnForm);
+    //định nghĩa form
+    function AnForm() {
+        $("#popup_login").hide();
+
+    }
+</script>
+
+
+
+
+
+
+
+
+
+<div>
+    <div id="popup_loginAdmin">
+        <div class="col-lg-6" style="position:fixed;left:325px;top:25px;">
+            <div class="p-5">
+                <div style="clear:both; text-align:right; margin-bottom:0;">
+                    <span id="close_formAdmin" class="btn btn-danger"> X</span>
+                </div>
+                <div class="text-center">
+                    <h1 class="h2 text-light "><strong>ĐĂNG NHẬP QUẢN TRỊ</strong> </h1>
+                </div>
+                @using (Ajax.BeginForm("DangNhapAdmin", "Home", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "ThongBaoSai" }))
+                {
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-user" required="" id="TaiKhoanDNAdmin" name="TaiKhoanDNAdmin" placeholder="Tài Khoản">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control form-control-user" required="" id="MatKhauDNAdmin" name="MatKhauDNAdmin" placeholder="Mật Khẩu">
+                    </div>
+
+                    <h3 style="font-weight:bold; color:red; text-align:center " id="ThongBaoSai">  </h3>
+                    <input value="ĐĂNG NHẬP QUẢN TRỊ" type="submit" class="btn btn-primary btn-user btn-block" />
+                    <hr>
+                    <div class="text-center">
+                        <a class="small text-light" href="#">Quên Mật Khẩu?</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    #popup_loginAdmin {
+        position: fixed;
+        background-color: rgba(0,0,0,.9);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+        display: none;
+    }
+</style>
+<script type="text/javascript">
+    // hiển thị form đăng nhập Admin
+    $("#btnDangNhapAdmin").click(function () {
+        $("#popup_loginAdmin").slideDown();
+    });
+    //ẩn đi form đăng nhập Admin
+    $("#close_formAdmin").click(AnFormAdmin);
+
+    //định nghĩa form Admin
+    function AnFormAdmin() {
+
+        $("#popup_loginAdmin").hide();
+
+    }
+</script>

@@ -1,0 +1,398 @@
+﻿@using CaptchaMvc.HtmlHelpers
+@using CaptchaMvc;
+@using DoAnTotNghiep.Models
+@model ThanhVien
+@{
+    ViewBag.Title = "DangKy1";
+    Layout = "~/Views/Layout/SanPhamLayout.cshtml";
+}
+<link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="~/Content/css/CssLogin/sb-admin-2.min.css" rel="stylesheet">
+<!-- Bootstrap core JavaScript-->
+<script src="~/Content/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="~/Content/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="~/Content/js/JsLogin/sb-admin-2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+
+
+    $("#btnDangKy").click(function () {
+        $("#ktmatkhau").validate({
+
+            "MatKhau": {
+                required: true
+            },
+            "NhapLaiMatKhau": {
+                required: true,
+                equalTo: "#MatKhau"
+            },
+        })
+
+    });
+
+</script>
+
+
+
+
+
+
+<div class="col-md-9 products-grid-right">
+    <div class="special ">
+        <div class="col-lg-7">
+            <div class="p-5">
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">ĐĂNG KÝ THÀNH VIÊN</h1>
+                </div>
+
+
+                @using (Html.BeginForm())
+                {
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="text" required="Vui lòng điền Họ Tên" maxlength="50" class="form-control form-control-user" id="HoTen" name="Hoten" placeholder="Họ và Tên">
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="email" required="Vui lòng điền Email" class="form-control form-control-user" id="Email" name="Email" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" required="Vui lòng điền Địa Chỉ" class="form-control form-control-user" id="DiaChi" name="DiaChi" placeholder="Địa Chỉ">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" required="Vui lòng điền Số Điện Thoại" maxlength="10" class="form-control form-control-user" id="SDT" name="SDT" placeholder="Số Điện Thoại">
+                    </div>
+                    <div class="form-group">
+                        @*<input type="text" class="form-control form-control-user" id="CauHoi" name="CauHoi" placeholder="Câu Hỏi Bí Mật">*@
+                        @Html.DropDownList("CauHoi")
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" required="Vui lòng điền câu trả lời cho câu hỏi bạn chọn" class="form-control form-control-user" id="CauTraLoi" name="CauTraLoi" placeholder="Câu Trả Lời">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" required="Vui lòng điền tên Tài Khoản" maxlength="15" minlength="6" pattern="^[a-zA-Z0-9_.-]*$" class="form-control form-control-user" id="TaiKhoan" name="TaiKhoan" placeholder="Tài Khoản">
+                    </div>
+                    <div id="ktmatkhau">
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="password" required="Vui lòng nhập Mật Khẩu" minlength="8" class="form-control form-control-user" id="MatKhau" name="MatKhau" placeholder="Mật Khẩu">
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="password" required="Vui lòng nhập lại Mật Khẩu" minlength="8" [Compair("MatKhau")] class="form-control form-control-user" id="NhapLaiMatKhau" name="NhapLaiMatKhau" placeholder="Nhập lại Mật Khẩu">
+                            </div>
+                        </div>
+                        <script>
+                            var password = document.getElementById("MatKhau"), confirm_password = document.getElementById("NhapLaiMatKhau");
+                            function validatePassword() {
+                                if (password.value != confirm_password.value) {
+                                    confirm_password.setCustomValidity("Mật Khẩu Không Khớp!");
+                                } else {
+                                    confirm_password.setCustomValidity('');
+                                }
+                            }
+                            password.onchange = validatePassword;
+                            confirm_password.onkeyup = validatePassword;
+
+
+
+                        </script>
+
+
+
+
+                    </div>
+
+                    <div>
+                        @Html.Captcha(5)
+                    </div>
+                    <h1 style="color:red;"> @ViewBag.ThongBao</h1>
+                    <hr>
+                    <input id="btnDangKy" value="ĐĂNG KÝ TÀI KHOẢN" type="submit" class="btn btn-primary btn-user btn-block" />
+
+                    <hr>
+
+                    <a href="#" class="btn btn-google btn-user btn-block">
+                        <i class="fab fa-google fa-fw"></i> ĐĂNG KÝ VỚI GOOGLE
+                    </a>
+                    <a href="#" class="btn btn-facebook btn-user btn-block">
+                        <i class="fab fa-facebook-f fa-fw"></i> ĐĂNG KÝ VỚI FACEBOOK
+                    </a>
+
+                }
+
+                <hr>
+                <div class="text-center">
+                    <a class="small" href="forgot-password.html">Quên Mật Khẩu?</a>
+                </div>
+                <div class="text-center">
+                    <a class="small" id="btnDangNhap" href=" # ">Bạn đã có Tài Khoản? Đăng Nhập!</a>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link href="~/Content/css/CssLogin/sb-admin-2.min.css" rel="stylesheet">
+<!-- Bootstrap core JavaScript-->
+<script src="~/Content/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="~/Content/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="~/Content/js/JsLogin/sb-admin-2.min.js"></script>
+
+
+
+
+
+<div>
+
+
+
+    <div id="popup_login">
+
+        <div class="col-lg-6" style="position:fixed;left:325px;top:25px;">
+            <div class="p-5">
+                <div style="clear:both; text-align:right; margin-bottom:0;">
+                    <span id="close_form" class="btn btn-danger"> X</span>
+                </div>
+                <div class="text-center">
+                    <h1 class="h2 text-light "><strong>ĐĂNG NHẬP </strong> </h1>
+                </div>
+
+                @using (Ajax.BeginForm("DangNhap", "Home", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "ThongBaoSai" }))
+                {
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-user" required="" id="TaiKhoanDN" name="TaiKhoanDN" placeholder="Tài Khoản">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control form-control-user" required="" id="MatKhauDN" name="MatKhauDN" placeholder="Mật Khẩu">
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox small">
+                            <input type="checkbox" class=" h6 text-light" id="customCheck">
+                            <label class="text-light" for="customCheck">Lưu mật khẩu</label>
+                        </div>
+                    </div>
+                    <h3 style="font-weight:bold; color:red; text-align:center " id="ThongBaoSai">  </h3>
+                    <input value="ĐĂNG NHẬP" type="submit" class="btn btn-primary btn-user btn-block" />
+                    <hr>
+                    <a href="index.html" class="btn btn-google btn-user btn-block">
+                        <i class="fab fa-google fa-fw"></i> ĐĂNG NHẬP VỚI GOOGLE
+                    </a>
+                    <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                        <i class="fab fa-facebook-f fa-fw"></i> ĐĂNG NHẬP VỚI FACEBOOK
+                    </a>
+
+                    <hr>
+                    <div class="text-center">
+                        <a class="small text-light" href="forgot-password.html">Quên Mật Khẩu?</a>
+                    </div>
+                    <div class="text-center">
+                        <a class="small text-light" href="register.html">Đăng Ký Tài Khoản!</a>
+                    </div>
+                }
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+</div>
+<style>
+
+
+    /* css cho phần popup_login
+                     */
+    #popup_login {
+        position: fixed;
+        background-color: rgba(0,0,0,.9);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+        display: none;
+    }
+</style>
+@* sử dụng jquery hiển thị popup_login*@
+<script type="text/javascript">
+    // hiển thị form đăng nhập
+    $("#btnDangNhap").click(function () {
+        $("#popup_login").slideDown();
+    });
+
+
+
+    //ẩn đi form đăng nhập
+    $("#close_form").click(AnForm);
+
+    //định nghĩa form
+    function AnForm() {
+
+        $("#popup_login").hide();
+
+    }
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="col-md-9 products-grid-right">
+        <div class="special ">
+            <div class="col-lg-7">
+                <div class="p-5">
+                    <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">ĐĂNG KÝ THÀNH VIÊN</h1>
+                    </div>
+
+
+
+
+
+                   <form class="user">
+                     <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="text" class="form-control form-control-user" id="HoTen" name="Hoten" placeholder="Họ và Tên">
+
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="email" class="form-control form-control-user" id="Email" name="Email" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-user" id="DiaChi" name="DiaChi" placeholder="Địa Chỉ">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-user" id="SDT" name="SDT" placeholder="Số Điện Thoại">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-user" id="TaiKhoan" name="TaiKhoan" placeholder="Tài Khoản">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-user" id="CauHoi" name="CauHoi" placeholder="Câu Hỏi Bí Mật">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-user" id="CauTraLoi" name="CauTraLoi" placeholder="Câu Trả Lời">
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="password" class="form-control form-control-user" id="MatKhau" name="MatKhau" placeholder="Mật Khẩu">
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control form-control-user" id="NhapLaiMatKhau" name="NhapLaiMatKhau" placeholder="Nhập lại Mật Khẩu">
+                            </div>
+
+                        </div>
+                    <a href="login.html" class="btn btn-primary btn-user btn-block">
+                      Register Account
+                    </a>
+                    <hr>
+                    <a href="index.html" class="btn btn-google btn-user btn-block">
+                      <i class="fab fa-google fa-fw"></i> Register with Google
+                    </a>
+                    <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                      <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                    </a>
+                  </form>
+
+                    <hr>
+                    <div class="text-center">
+                        <a class="small" href="forgot-password.html">Quên Mật Khẩu?</a>
+                    </div>
+                    <div class="text-center">
+                        <a class="small" href="login.html">Bạn đã có Tài Khoản? Đăng Nhập!</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

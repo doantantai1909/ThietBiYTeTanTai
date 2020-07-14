@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "TuyenDung";
+    Layout = "~/Views/Layout/SanPhamLayout.cshtml";
+}
+
+@using DoAnTotNghiep.Models
+@model IEnumerable<TuyenDung>
+
+<div class="col-md-9 products-grid-right">
+    <div class="special dv-dstintuc">
+        <h3>Thông Tin Tuyển Dụng</h3>
+        <div class="specia-top">
+            <!--  -->
+            @foreach (var item in Model)
+            {
+                <div id="one-news">
+                    <div id="news-img">
+                        <a href=" @Url.Action("ChiTietTuyenDung", "Home", new {id = item.MaTuyenDung })">
+                            <img src=" @Url.Content("~/Content/images/" + item.HinhAnh)" alt="@item.TieuDeTuyenDung">
+                        </a>
+                    </div>
+                    <div id="news-view">
+                        <div id="tieude_tintuc"><a href="@Url.Action("ChiTietTuyenDung", "Home", new {id = item.MaTuyenDung })"> @item.TieuDeTuyenDung</a></div>
+                        <div id="news-day">Số Điện Thoại: @item.NgayDang </div>
+                        <div id="news-day">Email: @item.SDT </div>
+                    </div>
+                    <div class="clear">
+
+                    </div>
+                </div>
+
+            }
+            <!--  -->
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+
